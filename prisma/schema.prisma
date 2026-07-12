@@ -1,11 +1,44 @@
-// SQLite Prisma Schema
+// PostgreSQL Prisma Schema (Source of Truth)
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FLEET_MANAGER
+  DRIVER_OPS
+  SAFETY_OFFICER
+  FINANCIAL_ANALYST
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  ON_TRIP
+  IN_SHOP
+  RETIRED
+}
+
+enum DriverStatus {
+  AVAILABLE
+  ON_TRIP
+  OFF_DUTY
+  SUSPENDED
+}
+
+enum TripStatus {
+  DRAFT
+  DISPATCHED
+  COMPLETED
+  CANCELLED
+}
+
+enum MaintenanceStatus {
+  OPEN
+  CLOSED
 }
 
 model User {
@@ -13,7 +46,7 @@ model User {
   name         String
   email        String   @unique
   passwordHash String
-  role         String // Enum: FLEET_MANAGER, DRIVER_OPS, SAFETY_OFFICER, FINANCIAL_ANALYST
+  role         Role
   createdAt    DateTime @default(now())
 }
 
@@ -25,7 +58,7 @@ model Vehicle {
   maxLoadCapacity    Float
   odometer           Float
   acquisitionCost    Float
-  status             String           @default("AVAILABLE") // Enum: AVAILABLE, ON_TRIP, IN_SHOP, RETIRED
+  status             VehicleStatus    @default(AVAILABLE)
   region             String
   createdAt          DateTime         @default(now())
   trips              Trip[]
@@ -42,7 +75,7 @@ model Driver {
   licenseExpiryDate DateTime
   contactNumber     String
   safetyScore       Int          @default(100)
-  status            String       @default("AVAILABLE") // Enum: AVAILABLE, ON_TRIP, OFF_DUTY, SUSPENDED
+  status            DriverStatus @default(AVAILABLE)
   createdAt         DateTime     @default(now())
   trips              Trip[]
 }
@@ -60,7 +93,7 @@ model Trip {
   actualDistance  Float?
   fuelConsumed    Float?
   revenue         Float      @default(0.0)
-  status          String     @default("DRAFT") // Enum: DRAFT, DISPATCHED, COMPLETED, CANCELLED
+  status          TripStatus @default(DRAFT)
   dispatchedAt    DateTime?
   completedAt     DateTime?
   createdAt       DateTime   @default(now())
@@ -72,7 +105,7 @@ model MaintenanceLog {
   vehicle     Vehicle           @relation(fields: [vehicleId], references: [id])
   description String
   cost        Float
-  status      String            @default("OPEN") // Enum: OPEN, CLOSED
+  status      MaintenanceStatus @default(OPEN)
   createdAt   DateTime          @default(now())
   closedAt    DateTime?
 }
