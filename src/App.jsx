@@ -6,13 +6,13 @@ import { FONT_IMPORT, COLORS, ROLES, STATUS_STYLES, uid, today, fmtDate } from "
 import { seedVehicles, seedDrivers, seedTrips, seedMaintenance, seedFuel, seedExpense } from "./data/seed";
 import { inputStyle } from "./components/ui";
 
-import { DashboardPage } from "./pages/Dashboard";
-import { VehiclesPage, VehicleForm } from "./pages/Vehicles";
-import { DriversPage, DriverForm } from "./pages/Drivers";
-import { TripsPage, TripForm, CompleteTripForm } from "./pages/Trips";
-import { MaintenancePage, MaintenanceForm } from "./pages/Maintenance";
-import { FuelExpensePage, FuelForm, ExpenseForm } from "./pages/FuelExpense";
-import { ReportsPage } from "./pages/Reports";
+import { DashboardPage } from "./mock-pages/Dashboard";
+import { VehiclesPage, VehicleForm } from "./mock-pages/Vehicles";
+import { DriversPage, DriverForm } from "./mock-pages/Drivers";
+import { TripsPage, TripForm, CompleteTripForm } from "./mock-pages/Trips";
+import { MaintenancePage, MaintenanceForm } from "./mock-pages/Maintenance";
+import { FuelExpensePage, FuelForm, ExpenseForm } from "./mock-pages/FuelExpense";
+import { ReportsPage } from "./mock-pages/Reports";
 
 const NAV_ITEMS = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
