@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import { addVehicle } from '@/actions/vehicleActions';
 import { Plus, Filter, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
+import { VehicleFilters } from '@/components/VehicleFilters';
 
 interface SearchParams {
   region?: string;
@@ -188,47 +189,11 @@ export default async function VehiclesPage({
             </div>
 
             <div className="flex gap-3">
-              <div>
-                <select
-                  value={regionFilter || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const url = new URL(window.location.href);
-                    if (val) url.searchParams.set('region', val);
-                    else url.searchParams.delete('region');
-                    window.location.href = url.pathname + url.search;
-                  }}
-                  className="px-3 py-1.5 bg-slate-950 border border-slate-850 outline-none text-slate-300 text-xs rounded-lg"
-                >
-                  <option value="">All Regions</option>
-                  {uniqueRegions.map((reg) => (
-                    <option key={reg} value={reg}>
-                      {reg}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <select
-                  value={statusFilter || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const url = new URL(window.location.href);
-                    if (val) url.searchParams.set('status', val);
-                    else url.searchParams.delete('status');
-                    window.location.href = url.pathname + url.search;
-                  }}
-                  className="px-3 py-1.5 bg-slate-950 border border-slate-850 outline-none text-slate-300 text-xs rounded-lg"
-                >
-                  <option value="">All Statuses</option>
-                  <option value="AVAILABLE">AVAILABLE</option>
-                  <option value="ON_TRIP">ON_TRIP</option>
-                  <option value="IN_SHOP">IN_SHOP</option>
-                  <option value="RETIRED">RETIRED</option>
-                </select>
-              </div>
-
+              <VehicleFilters
+                uniqueRegions={uniqueRegions}
+                regionFilter={regionFilter}
+                statusFilter={statusFilter}
+              />
               {(regionFilter || statusFilter) && (
                 <Link
                   href="/vehicles"

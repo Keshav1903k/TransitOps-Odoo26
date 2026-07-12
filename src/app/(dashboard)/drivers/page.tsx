@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import { addDriver, updateDriverSafetyScore, updateDriverStatus } from '@/actions/driverActions';
 import { Users, ShieldAlert, AlertTriangle, Search } from 'lucide-react';
 import Link from 'next/link';
+import { DriverFilters } from '@/components/DriverFilters';
 
 interface SearchParams {
   status?: string;
@@ -191,25 +192,7 @@ export default async function DriversPage({
             </div>
 
             <div className="flex gap-3">
-              <div>
-                <select
-                  value={statusFilter || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const url = new URL(window.location.href);
-                    if (val) url.searchParams.set('status', val);
-                    else url.searchParams.delete('status');
-                    window.location.href = url.pathname + url.search;
-                  }}
-                  className="px-3 py-1.5 bg-slate-950 border border-slate-850 outline-none text-slate-300 text-xs rounded-lg"
-                >
-                  <option value="">All Statuses</option>
-                  <option value="AVAILABLE">AVAILABLE</option>
-                  <option value="ON_TRIP">ON_TRIP</option>
-                  <option value="OFF_DUTY">OFF_DUTY</option>
-                  <option value="SUSPENDED">SUSPENDED</option>
-                </select>
-              </div>
+              <DriverFilters statusFilter={statusFilter} />
 
               {(statusFilter || complianceFilter) && (
                 <Link
