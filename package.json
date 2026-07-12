@@ -1,0 +1,13 @@
+{
+  "name": "transitops-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TransitOps — fleet dispatch console UI prototype (in-memory, no backend)",
+  "main": "src/App.jsx",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.383.0",
+    "recharts": "^2.12.0"
+  }
+}
