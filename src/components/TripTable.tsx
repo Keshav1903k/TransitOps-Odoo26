@@ -14,8 +14,6 @@ import {
   XCircle,
   Clock,
   Navigation,
-  Fuel,
-  Info,
 } from 'lucide-react';
 
 interface Vehicle {

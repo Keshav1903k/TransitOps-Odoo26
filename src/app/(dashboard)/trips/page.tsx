@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { prisma } from '@/lib/db';
 import { createTrip } from '@/actions/stateTransitions';
 import { TripTable } from '@/components/TripTable';
-import { Route, Plus, ShieldAlert } from 'lucide-react';
+import { Plus, ShieldAlert } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 
 export default async function TripsPage() {

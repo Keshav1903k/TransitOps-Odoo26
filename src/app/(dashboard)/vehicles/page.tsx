@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/db';
 import { addVehicle } from '@/actions/vehicleActions';
-import { Truck, Plus, Filter, ShieldAlert } from 'lucide-react';
+import { Plus, Filter, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
 interface SearchParams {

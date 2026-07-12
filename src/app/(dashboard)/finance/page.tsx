@@ -3,7 +3,7 @@ import { prisma } from '@/lib/db';
 import { addFuelLog, addExpense } from '@/actions/financeActions';
 import { FinancialCharts } from '@/components/FinancialCharts';
 import { CsvExporter } from '@/components/CsvExporter';
-import { DollarSign, Fuel, Plus, ShieldAlert, FileText } from 'lucide-react';
+import { DollarSign, Fuel, ShieldAlert } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 
 export default async function FinancePage() {

@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/db';
 import { addDriver, updateDriverSafetyScore, updateDriverStatus } from '@/actions/driverActions';
-import { Users, ShieldAlert, AlertTriangle, CheckCircle, Search, Sparkles } from 'lucide-react';
+import { Users, ShieldAlert, AlertTriangle, Search } from 'lucide-react';
 import Link from 'next/link';
 
 interface SearchParams {

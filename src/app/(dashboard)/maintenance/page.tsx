@@ -1,8 +1,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/db';
 import { createMaintenanceLog, closeMaintenanceLog } from '@/actions/stateTransitions';
-import { Wrench, Plus, CheckCircle, ShieldAlert, Archive, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { Plus, CheckCircle, ShieldAlert, Archive, Clock } from 'lucide-react';
 
 export default async function MaintenancePage() {
   const session = await auth();

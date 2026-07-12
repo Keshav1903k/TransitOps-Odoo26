@@ -8,7 +8,6 @@ import {
   DollarSign,
   AlertTriangle,
   ArrowRight,
-  TrendingUp,
   Shield,
 } from 'lucide-react';
 import Link from 'next/link';
