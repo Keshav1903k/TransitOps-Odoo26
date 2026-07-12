@@ -1,0 +1,96 @@
+// SQLite Prisma Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String // Enum: FLEET_MANAGER, DRIVER_OPS, SAFETY_OFFICER, FINANCIAL_ANALYST
+  createdAt    DateTime @default(now())
+}
+
+model Vehicle {
+  id                 String           @id @default(uuid())
+  registrationNumber String           @unique
+  name               String
+  type               String
+  maxLoadCapacity    Float
+  odometer           Float
+  acquisitionCost    Float
+  status             String           @default("AVAILABLE") // Enum: AVAILABLE, ON_TRIP, IN_SHOP, RETIRED
+  region             String
+  createdAt          DateTime         @default(now())
+  trips              Trip[]
+  maintenanceLogs    MaintenanceLog[]
+  fuelLogs           FuelLog[]
+  expenses           Expense[]
+}
+
+model Driver {
+  id                String       @id @default(uuid())
+  name              String
+  licenseNumber     String       @unique
+  licenseCategory   String
+  licenseExpiryDate DateTime
+  contactNumber     String
+  safetyScore       Int          @default(100)
+  status            String       @default("AVAILABLE") // Enum: AVAILABLE, ON_TRIP, OFF_DUTY, SUSPENDED
+  createdAt         DateTime     @default(now())
+  trips              Trip[]
+}
+
+model Trip {
+  id              String     @id @default(uuid())
+  source          String
+  destination     String
+  vehicleId       String
+  vehicle         Vehicle    @relation(fields: [vehicleId], references: [id])
+  driverId        String
+  driver          Driver     @relation(fields: [driverId], references: [id])
+  cargoWeight     Float
+  plannedDistance Float
+  actualDistance  Float?
+  fuelConsumed    Float?
+  revenue         Float      @default(0.0)
+  status          String     @default("DRAFT") // Enum: DRAFT, DISPATCHED, COMPLETED, CANCELLED
+  dispatchedAt    DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime   @default(now())
+}
+
+model MaintenanceLog {
+  id          String            @id @default(uuid())
+  vehicleId   String
+  vehicle     Vehicle           @relation(fields: [vehicleId], references: [id])
+  description String
+  cost        Float
+  status      String            @default("OPEN") // Enum: OPEN, CLOSED
+  createdAt   DateTime          @default(now())
+  closedAt    DateTime?
+}
+
+model FuelLog {
+  id        String   @id @default(uuid())
+  vehicleId String
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  liters    Float
+  cost      Float
+  date      DateTime @default(now())
+}
+
+model Expense {
+  id        String   @id @default(uuid())
+  vehicleId String
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  type      String
+  amount    Float
+  date      DateTime @default(now())
+}
